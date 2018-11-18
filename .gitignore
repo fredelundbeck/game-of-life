@@ -1,7 +1,10 @@
+# ignore java files
 *.class
-.settings
-.travis.yml
-.project
-.classpath
-.editorconfig
-target
+
+# ignore vs code files
+code/.settings
+code/.travis.yml
+code/.project
+code/.classpath
+code/.editorconfig
+code/target
