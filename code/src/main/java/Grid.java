@@ -33,46 +33,43 @@ public class Grid
         cells = updatedGrid;
     }
 
+    private int repCord(int n)
+    {
+        
+        if (n >= size) 
+        {
+            return 0;
+        }
+
+        if (n < 0) 
+        {
+            return size-1;
+        }
+
+        return n;
+    }
+
     private boolean decideStatus(int x, int y)
     {
         boolean currStatus = cells[x][y].getStatus();
         int aliveNeighbours = 0;
 
-        //Check if surrounding neighbour cells are alive
-        //directional neighbour cells
-        if (x-1 >= 0) 
-        {
-            aliveNeighbours += cells[x-1][y].getStatus() == true ? 1 : 0;   
-        }
-        if (x+1 < size) 
-        {
-            aliveNeighbours += cells[x+1][y].getStatus() == true ? 1 : 0; 
-        }
-        if (y-1 >= 0) 
-        {
-            aliveNeighbours += cells[x][y-1].getStatus() == true ? 1 : 0;
-        }
-        if (y+1 < size) 
-        {
-            aliveNeighbours += cells[x][y+1].getStatus() == true ? 1 : 0;   
-        }
-        //diagonal neighbour cells
-        if (x-1 >= 0 && y-1 >= 0) 
-        {
-            aliveNeighbours += cells[x-1][y-1].getStatus() == true ? 1 : 0;
-        }
-        if (x+1 < size && y-1 >= 0) 
-        {
-            aliveNeighbours += cells[x+1][y-1].getStatus() == true ? 1 : 0;
-        }
-        if (x-1 >= 0 && y+1 < size) 
-        {
-            aliveNeighbours += cells[x-1][y+1].getStatus() == true ? 1 : 0;
-        }
-        if (x+1 < size && y+1 < size) 
-        {
-            aliveNeighbours += cells[x+1][y+1].getStatus() == true ? 1 : 0;
-        }
+            aliveNeighbours += cells[repCord(x-1)][y].getStatus() == true ? 1 : 0;   
+        
+            aliveNeighbours += cells[repCord(x+1)][y].getStatus() == true ? 1 : 0; 
+        
+            aliveNeighbours += cells[x][repCord(y-1)].getStatus() == true ? 1 : 0;
+        
+            aliveNeighbours += cells[x][repCord(y+1)].getStatus() == true ? 1 : 0;   
+        
+            aliveNeighbours += cells[repCord(x-1)][repCord(y-1)].getStatus() == true ? 1 : 0;
+        
+            aliveNeighbours += cells[repCord(x+1)][repCord(y-1)].getStatus() == true ? 1 : 0;
+        
+            aliveNeighbours += cells[repCord(x-1)][repCord(y+1)].getStatus() == true ? 1 : 0;
+
+            aliveNeighbours += cells[repCord(x+1)][repCord(y+1)].getStatus() == true ? 1 : 0;
+        
 
         //decide based on Conways game of life rules: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules
         if (currStatus == true) 
