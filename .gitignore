@@ -1,0 +1,7 @@
+*.class
+.settings
+.travis.yml
+.project
+.classpath
+.editorconfig
+target
