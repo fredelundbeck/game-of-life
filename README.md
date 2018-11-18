@@ -1,4 +1,4 @@
-# GameOfLife
+# Game of life
 Conway's game of life java applet, for school!
 
 ## About
