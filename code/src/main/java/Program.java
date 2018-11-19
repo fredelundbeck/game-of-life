@@ -1,15 +1,14 @@
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.IntStream;
 
 import javax.swing.*;
 
 public final class Program {
     
-    public static final int WIDTH = 600;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 1000;
     private static Grid grid;
     private static JFrame frame;
     private static Display display;
@@ -18,10 +17,12 @@ public final class Program {
 
     public static void main(String[] args) 
     {
-        timer = new Timer(); 
-        grid = new Grid(30);
-        grid.randomizeCells();
-        initGUI();
+        //timer = new Timer(); 
+        //grid = new Grid(200);
+        //grid.randomizeCells();
+        //initGUI();
+
+        IntStream.range(0, 10).forEach(index -> { System.out.println(index); });
     }
 
     private static void initGUI()
@@ -47,7 +48,7 @@ public final class Program {
                         grid.updateGrid();
                         display.repaint();
                     }
-                }, 0, 100);
+                }, 0, 50);
 
             }
         });

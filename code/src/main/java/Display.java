@@ -1,13 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Display extends JPanel 
 {
-    private final int FADE = 45;
+    private final int FADE_AMOUNT = 45;
 
     private Grid grid;
     private float gridSizeX;
@@ -15,6 +13,7 @@ public class Display extends JPanel
 
     private int[][] colors;
     private boolean[][] wasTouched;
+    private boolean colorDeadCells = true;
 
     public Display(Grid grid) 
     {
@@ -22,8 +21,16 @@ public class Display extends JPanel
         colors = new int[grid.getSize()][grid.getSize()];
         wasTouched = new boolean[grid.getSize()][grid.getSize()];
         setBackground(Color.WHITE);
+        initColors();
+    }
 
+    public void colorDeadCells(boolean colorDeadCells)
+    {
+        this.colorDeadCells = colorDeadCells;
+    }
 
+    private void initColors()
+    {
         for (int x = 0; x < grid.getSize(); x++) {
             for (int y = 0; y < grid.getSize(); y++) {
                 colors[x][y] = 255; 
@@ -45,28 +52,31 @@ public class Display extends JPanel
                 if (cells[x][y].getStatus()) 
                 {
                     g.setColor(Color.BLACK);
-                    g.fillRect((int)(x * gridSizeX), (int)(y * gridSizeY), (int)gridSizeX+1, (int)gridSizeY);
-                    colors[x][y] = 100;
-                    wasTouched[x][y] = true;
-                    colors[x][y] = 45;
+                    g.fillRect((int)(x * gridSizeX), (int)(y * gridSizeY), (int)gridSizeX+1, (int)gridSizeY+1);
+
+                    if (colorDeadCells) 
+                    {
+                        colors[x][y] = 100;
+                        wasTouched[x][y] = true;
+                        colors[x][y] = 45;
+                    }
                 }
                 else 
                 {
-                    if (colors[x][y] < 255) 
+                    if (colors[x][y] < 255 && colorDeadCells) 
                     {
                         int red = 0;
                         int green = 0;
                         int blue = 0;
 
-                        colors[x][y] = colors[x][y] + FADE < 255 ? (colors[x][y] + FADE) : 255;
+                        colors[x][y] = colors[x][y] + FADE_AMOUNT < 255 ? (colors[x][y] + FADE_AMOUNT) : 255;
 
                         red = colors[x][y] / 4;
                         green = colors[x][y];
-                        blue = colors[x][y] / 3;
-                        
+                        blue = colors[x][y] / 3; 
 
                         g.setColor(new Color(red, green, blue));
-                        g.fillRect((int)(x * gridSizeX), (int)(y * gridSizeY), (int)gridSizeX+1, (int)gridSizeY);
+                        g.fillRect((int)(x * gridSizeX), (int)(y * gridSizeY), (int)gridSizeX+1, (int)gridSizeY+1);
                     }
                 }
             }
