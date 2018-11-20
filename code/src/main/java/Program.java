@@ -1,7 +1,6 @@
 import java.awt.Dimension;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.stream.IntStream;
 
 import javax.swing.*;
 
@@ -14,47 +13,37 @@ public final class Program {
     private static Display display;
 
     static Timer timer;
-
+    
     public static void main(String[] args) 
     {
-        //timer = new Timer(); 
-        //grid = new Grid(200);
-        //grid.randomizeCells();
-        //initGUI();
-
-        IntStream.range(0, 10).forEach(index -> { System.out.println(index); });
+        initGUI();  
     }
 
     private static void initGUI()
     {
-        javax.swing.SwingUtilities.invokeLater(new Runnable(){
-            public void run(){
+        timer = new Timer(); 
+        grid = new Grid(200);
+        grid.randomizeCells();
 
-                frame = new JFrame("Game of life");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-                frame.setMaximumSize(new Dimension(WIDTH,HEIGHT));
-                frame.setMinimumSize(new Dimension(WIDTH,HEIGHT));
-                frame.setResizable(false);
-                frame.setVisible(true);
+        javax.swing.SwingUtilities.invokeLater(() -> {
 
-                display = new Display(grid);
-                
-                frame.add(display);  
-                
-                timer.schedule(new TimerTask(){
-                    public void run()
-                    {
-                        grid.updateGrid();
-                        display.repaint();
-                    }
-                }, 0, 50);
+            frame = new JFrame("Game of life");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+            frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
+            frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+            frame.setResizable(false);
+            frame.setVisible(true);
 
-            }
+            display = new Display(grid);
+            frame.add(display);
+
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    grid.updateGrid();
+                    display.repaint();
+                }
+            }, 0, 50);
         });
-
-        
     }
-
-
 }

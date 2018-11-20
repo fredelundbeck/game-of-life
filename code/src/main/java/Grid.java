@@ -35,42 +35,38 @@ public class Grid
 
     private int repCord(int n)
     {
-        
         if (n >= size) 
         {
             return 0;
         }
-
         if (n < 0) 
         {
             return size-1;
         }
-
         return n;
     }
 
+    /**
+     * This method checks the {@code cells[x][y]} cell and counts it's neighbours and based on Conway's game of life rules
+     * , then decides whether or not that cell should live or die.
+     * @param x coordinate of current cell to check neighbours from
+     * @param y coordinate of current cell to check neighbours from
+     * @return returns a {@code boolean} value on whether or not current cell should live or die
+     */
     private boolean decideStatus(int x, int y)
     {
         boolean currStatus = cells[x][y].getStatus();
         int aliveNeighbours = 0;
-
-            aliveNeighbours += cells[repCord(x-1)][y].getStatus() == true ? 1 : 0;   
+        //Check cell neighbours, add 1 to total aliveNeighbours if alive
+        aliveNeighbours += cells[repCord(x-1)][y].getStatus() == true ? 1 : 0;   
+        aliveNeighbours += cells[repCord(x+1)][y].getStatus() == true ? 1 : 0; 
+        aliveNeighbours += cells[x][repCord(y-1)].getStatus() == true ? 1 : 0;
+        aliveNeighbours += cells[x][repCord(y+1)].getStatus() == true ? 1 : 0;   
+        aliveNeighbours += cells[repCord(x-1)][repCord(y-1)].getStatus() == true ? 1 : 0;
+        aliveNeighbours += cells[repCord(x+1)][repCord(y-1)].getStatus() == true ? 1 : 0;
+        aliveNeighbours += cells[repCord(x-1)][repCord(y+1)].getStatus() == true ? 1 : 0;
+        aliveNeighbours += cells[repCord(x+1)][repCord(y+1)].getStatus() == true ? 1 : 0;
         
-            aliveNeighbours += cells[repCord(x+1)][y].getStatus() == true ? 1 : 0; 
-        
-            aliveNeighbours += cells[x][repCord(y-1)].getStatus() == true ? 1 : 0;
-        
-            aliveNeighbours += cells[x][repCord(y+1)].getStatus() == true ? 1 : 0;   
-        
-            aliveNeighbours += cells[repCord(x-1)][repCord(y-1)].getStatus() == true ? 1 : 0;
-        
-            aliveNeighbours += cells[repCord(x+1)][repCord(y-1)].getStatus() == true ? 1 : 0;
-        
-            aliveNeighbours += cells[repCord(x-1)][repCord(y+1)].getStatus() == true ? 1 : 0;
-
-            aliveNeighbours += cells[repCord(x+1)][repCord(y+1)].getStatus() == true ? 1 : 0;
-        
-
         //decide based on Conways game of life rules: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules
         if (currStatus == true) 
         {
@@ -95,6 +91,9 @@ public class Grid
 
     }
 
+    /**
+     * This method is used for randomizing whether or not the cells are alive, before the simulation begins.
+     */
     public void randomizeCells()
     {
         Random rnd = new Random();
@@ -105,6 +104,9 @@ public class Grid
         }   
     }
     
+    /**
+     * Declares and initializes the {@code cells[][]}. The size of both dimensions are equal to {@code size}
+     */
     private void initGrid()
     {
         cells = new Cell[size][size];  
