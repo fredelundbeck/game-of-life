@@ -2,10 +2,7 @@ public class Cell
 {
     private boolean status = false;
 
-    public Cell() 
-    {
-        
-    }
+    public Cell() {}
 
     public Cell(boolean status)
     {

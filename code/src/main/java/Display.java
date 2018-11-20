@@ -38,7 +38,6 @@ public class Display extends JPanel
         }
     }
 
-
     private void drawGrid(Graphics g)
     {
         gridSizeX = (float)this.getSize().width / grid.getSize();
@@ -56,7 +55,6 @@ public class Display extends JPanel
 
                     if (colorDeadCells) 
                     {
-                        colors[x][y] = 100;
                         wasTouched[x][y] = true;
                         colors[x][y] = 45;
                     }
@@ -73,7 +71,7 @@ public class Display extends JPanel
 
                         red = colors[x][y] / 4;
                         green = colors[x][y];
-                        blue = colors[x][y] / 3; 
+                        blue = colors[x][y] / 2; 
 
                         g.setColor(new Color(red, green, blue));
                         g.fillRect((int)(x * gridSizeX), (int)(y * gridSizeY), (int)gridSizeX+1, (int)gridSizeY+1);
